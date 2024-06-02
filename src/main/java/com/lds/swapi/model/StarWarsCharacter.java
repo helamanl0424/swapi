@@ -1,12 +1,14 @@
 package com.lds.swapi.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "star_war_character")
 public class StarWarsCharacter {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
