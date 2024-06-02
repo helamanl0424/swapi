@@ -5,7 +5,7 @@ import com.lds.swapi.model.GalaxyPlanet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 @RestController
@@ -20,8 +20,10 @@ public class GalaxyPlanetController {
     }
 
     @GetMapping
-    public List<GalaxyPlanet> getAllPlanets() {
-        return galaxyPlanetService.findAll();
+    public List<GalaxyPlanet> getAllPlanets(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return galaxyPlanetService.findAll(PageRequest.of(page, size));
     }
 
     @GetMapping("/{id}")

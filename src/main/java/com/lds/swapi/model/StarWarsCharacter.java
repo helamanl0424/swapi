@@ -6,7 +6,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "star_war_character")
+@Table(name = "star_wars_character")
 public class StarWarsCharacter {
 
     @Id

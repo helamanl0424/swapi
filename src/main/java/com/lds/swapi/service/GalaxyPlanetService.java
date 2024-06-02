@@ -4,6 +4,8 @@ import com.lds.swapi.model.GalaxyPlanet;
 import com.lds.swapi.repository.GalaxyPlanetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +20,9 @@ public class GalaxyPlanetService {
         this.galaxyPlanetRepository = galaxyPlanetRepository;
     }
 
-    public List<GalaxyPlanet> findAll() {
-        return galaxyPlanetRepository.findAll();
+
+    public List<GalaxyPlanet> findAll(Pageable pageable) {
+        return galaxyPlanetRepository.findAll(pageable).getContent();
     }
 
     public Optional<GalaxyPlanet> findById(Long id) {
@@ -36,7 +39,7 @@ public class GalaxyPlanetService {
                     existingPlanet.setName(galaxyPlanet.getName());
                     existingPlanet.setClimate(galaxyPlanet.getClimate());
                     existingPlanet.setPopulation(galaxyPlanet.getPopulation());
-                    existingPlanet.setResidents(galaxyPlanet.getResidents());
+                    //existingPlanet.setResidents(galaxyPlanet.getResidents());
                     return Optional.of(galaxyPlanetRepository.save(existingPlanet));
                 })
                 .orElse(Optional.empty());

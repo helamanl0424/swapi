@@ -17,8 +17,8 @@ public class GalaxyPlanet {
     private String climate;
     private Integer population;
 
-    @OneToMany(mappedBy = "homePlanet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<StarWarsCharacter> residents = new HashSet<>();
+//    @OneToMany(mappedBy = "homePlanet", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<StarWarsCharacter> residents = new HashSet<>();
 
     // Getters and setters
     public Long getId() {
@@ -53,11 +53,11 @@ public class GalaxyPlanet {
         this.population = population;
     }
 
-    public Set<StarWarsCharacter> getResidents() {
-        return residents;
-    }
-
-    public void setResidents(Set<StarWarsCharacter> residents) {
-        this.residents = residents;
-    }
+//    public Set<StarWarsCharacter> getResidents() {
+//        return residents;
+//    }
+//
+//    public void setResidents(Set<StarWarsCharacter> residents) {
+//        this.residents = residents;
+//    }
 }
