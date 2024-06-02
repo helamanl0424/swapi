@@ -1,12 +1,14 @@
 package com.lds.swapi.controller;
 
-import com.lds.swapi.model.StarshipMaster;
-import com.lds.swapi.service.StarshipMasterService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.lds.swapi.model.StarshipMaster;
+import com.lds.swapi.service.StarshipMasterService;
 
 @RestController
 @RequestMapping("/api/starships")
@@ -20,8 +22,10 @@ public class StarshipMasterController {
     }
 
     @GetMapping
-    public List<StarshipMaster> getAllStarships() {
-        return starshipService.findAll();
+    public List<StarshipMaster> getAllStarships(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10" ) int size) {
+        return starshipService.findAll(PageRequest.of(page, size));
     }
 
     @GetMapping("/{id}")

@@ -16,10 +16,10 @@ public class StarshipMaster {
 
     private String name;
     private String model;
-    private Double costInCredits; // Money type in PostgreSQL can be mapped to Double in Java.
+    private String costInCredits;
 
-    @ManyToMany(mappedBy = "starships")
-    private Set<StarWarsCharacter> characters = new HashSet<>();
+//    @ManyToMany(mappedBy = "starships")
+//    private Set<StarWarsCharacter> characters = new HashSet<>();
 
     // Constructors
     public StarshipMaster() {
@@ -50,23 +50,23 @@ public class StarshipMaster {
         this.model = model;
     }
 
-    public Double getCostInCredits() {
+    public String getCostInCredits() {
         return costInCredits;
     }
 
-    public void setCostInCredits(Double costInCredits) {
+    public void setCostInCredits(String costInCredits) {
         this.costInCredits = costInCredits;
     }
 
-    public Set<StarWarsCharacter> getCharacters() {
-        return characters;
-    }
-
-    public void setCharacters(Set<StarWarsCharacter> characters) {
-        this.characters = characters;
-        // Update bidirectional association
-        for (StarWarsCharacter character : characters) {
-            character.getStarships().add(this);
-        }
-    }
+//    public Set<StarWarsCharacter> getCharacters() {
+//        return characters;
+//    }
+//
+//    public void setCharacters(Set<StarWarsCharacter> characters) {
+//        this.characters = characters;
+//        // Update bidirectional association
+//        for (StarWarsCharacter character : characters) {
+//            character.getStarships().add(this);
+//        }
+//    }
 }

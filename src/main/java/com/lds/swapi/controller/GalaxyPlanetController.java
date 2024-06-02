@@ -1,12 +1,13 @@
 package com.lds.swapi.controller;
 
-import com.lds.swapi.service.GalaxyPlanetService;
-import com.lds.swapi.model.GalaxyPlanet;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.PageRequest;
-import java.util.List;
+
+import com.lds.swapi.model.GalaxyPlanet;
+import com.lds.swapi.service.GalaxyPlanetService;
 
 @RestController
 @RequestMapping("/api/planets")
@@ -20,34 +21,34 @@ public class GalaxyPlanetController {
     }
 
     @GetMapping
-    public List<GalaxyPlanet> getAllPlanets(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return galaxyPlanetService.findAll(PageRequest.of(page, size));
+    public ResponseEntity<List<GalaxyPlanet>> getAllPlanets(@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "0") int page) {
+        int offset = page * size;
+        return ResponseEntity.ok(galaxyPlanetService.findAllPlanets(size, offset));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GalaxyPlanet> getPlanetById(@PathVariable Long id) {
-        return galaxyPlanetService.findById(id)
+        return galaxyPlanetService.findPlanetById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public GalaxyPlanet createPlanet(@RequestBody GalaxyPlanet galaxyPlanet) {
-        return galaxyPlanetService.save(galaxyPlanet);
+    public ResponseEntity<Void> addPlanet(@RequestBody GalaxyPlanet planet) {
+        galaxyPlanetService.addPlanet(planet);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GalaxyPlanet> updatePlanet(@PathVariable Long id, @RequestBody GalaxyPlanet updatedPlanet) {
-        return galaxyPlanetService.update(id, updatedPlanet)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Void> updatePlanet(@PathVariable Long id, @RequestBody GalaxyPlanet planet) {
+        galaxyPlanetService.updatePlanet(id, planet);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePlanet(@PathVariable Long id) {
-        galaxyPlanetService.delete(id);
+        galaxyPlanetService.deletePlanet(id);
         return ResponseEntity.ok().build();
     }
+
 }

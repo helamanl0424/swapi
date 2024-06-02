@@ -3,8 +3,8 @@ package com.lds.swapi.service;
 import com.lds.swapi.model.StarshipMaster;
 import com.lds.swapi.repository.StarshipMasterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +18,8 @@ public class StarshipMasterService {
         this.starshipRepository = starshipRepository;
     }
 
-    public List<StarshipMaster> findAll() {
-        return starshipRepository.findAll();
+    public List<StarshipMaster> findAll(Pageable pageable) {
+        return starshipRepository.findAll(pageable).getContent();
     }
 
     public Optional<StarshipMaster> findById(Long id) {
