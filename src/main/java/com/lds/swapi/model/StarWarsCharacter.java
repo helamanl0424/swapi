@@ -1,4 +1,4 @@
-package com.lds.swapi.models;
+package com.lds.swapi.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
