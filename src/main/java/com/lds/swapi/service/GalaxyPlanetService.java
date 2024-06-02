@@ -30,14 +30,16 @@ public class GalaxyPlanetService {
         return galaxyPlanetRepository.save(galaxyPlanet);
     }
 
-    public GalaxyPlanet update(Long id, GalaxyPlanet galaxyPlanet) {
+    public Optional<GalaxyPlanet> update(Long id, GalaxyPlanet galaxyPlanet) {
         return galaxyPlanetRepository.findById(id)
                 .map(existingPlanet -> {
                     existingPlanet.setName(galaxyPlanet.getName());
                     existingPlanet.setClimate(galaxyPlanet.getClimate());
                     existingPlanet.setPopulation(galaxyPlanet.getPopulation());
-                    return galaxyPlanetRepository.save(existingPlanet);
-                }).orElseGet(() -> save(galaxyPlanet));
+                    existingPlanet.setResidents(galaxyPlanet.getResidents());
+                    return Optional.of(galaxyPlanetRepository.save(existingPlanet));
+                })
+                .orElse(Optional.empty());
     }
 
     public void delete(Long id) {

@@ -3,7 +3,7 @@ package com.lds.swapi.service;
 import com.lds.swapi.model.StarWarsCharacter;
 import com.lds.swapi.repository.StarWarsCharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import orgio.springframework.stereotype.Service;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,15 +30,14 @@ public class StarWarsCharacterService {
         return characterRepository.save(character);
     }
 
-    public StarWarsCharacter update(Long id, StarWarsCharacter character) {
+    public Optional<StarWarsCharacter> update(Long id, StarWarsCharacter character) {
         return characterRepository.findById(id)
                 .map(existingCharacter -> {
                     existingCharacter.setName(character.getName());
-                    existingCharacter.setSpecies(character.getSpecies());
-                    existingCharacter.setHeight(character.getHeight());
                     existingCharacter.setHomePlanet(character.getHomePlanet());
-                    return characterRepository.save(existingCharacter);
-                }).orElseGet(() -> save(character));
+                    existingCharacter.setStarships(character.getStarships());
+                    return Optional.of(characterRepository.save(existingCharacter));
+                }).orElse(Optional.empty());
     }
 
     public void delete(Long id) {

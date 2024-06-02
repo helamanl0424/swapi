@@ -55,7 +55,7 @@ public class GalaxyPlanet {
         return residents;
     }
 
-    public void setResidents(Set<StarPictureFrame> residents) {
+    public void setResidents(Set<StarWarsCharacter> residents) {
         this.residents = residents;
     }
 }

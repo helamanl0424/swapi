@@ -30,14 +30,14 @@ public class StarshipMasterService {
         return starshipRepository.save(starship);
     }
 
-    public StarshipMaster update(Long id, StarshipMaster starship) {
+    public Optional<StarshipMaster> update(Long id, StarshipMaster updatedStarship) {
         return starshipRepository.findById(id)
                 .map(existingStarship -> {
-                    existingStarship.setName(starship.getName());
-                    existingStarship.setModel(starship.getModel());
-                    existingStarship.setCostInCredits(starship.getCostInCredits());
-                    return starshipRepository.save(existingStarship);
-                }).orElseGet(() -> save(starship));
+                    existingStarship.setName(updatedStarship.getName());
+                    existingStarship.setModel(updatedStarship.getModel());
+                    existingStarship.setCostInCredits(updatedStarship.getCostInCredits());
+                    return Optional.of(starshipRepository.save(existingStarship));
+                }).orElse(Optional.empty());
     }
 
     public void delete(Long id) {
