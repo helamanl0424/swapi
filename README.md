@@ -33,7 +33,7 @@ The Star Wars API (SWAPI) is a Spring Boot-based application designed to manage 
 - SwapiApplication is the main class
   
 5. **Access the API:**
-- The API is accessible via `http://localhost:8080/api/people` for characters.
+- The API for characters is accessible via `http://localhost:8080/api/people`.
 - Use similar endpoints for accessing starships and planets as configured in your controllers.
 
 ### API Endpoints
@@ -46,7 +46,7 @@ The Star Wars API (SWAPI) is a Spring Boot-based application designed to manage 
 
 Replace `people` with `starships` or `planets` as necessary to interact with other data types.
 
-Unique endpoint for characters only to retrieve a character name with their associated starships'name and home planet's name: 
+Unique endpoint for characters only to retrieve a character name with their associated starships'name and home planet's name:
 **GET `/api/people/details/{id}`**
 
 ## Possible Improvements
