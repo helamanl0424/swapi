@@ -3,6 +3,9 @@ package com.lds.swapi.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+/**
+ * Represents a starship from the Star Wars universe.
+ */
 @Entity
 @Table(name = "starship_master")
 public class StarshipMaster {
@@ -12,10 +15,8 @@ public class StarshipMaster {
     private Integer id;
     private String name;
     private String model;
-//    @CompositeType(MonetaryAmountType.class)
-//    @Column(columnDefinition = "money")
     @JsonProperty("cost_in_credits")
-    private Double costInCredits;
+    private String costInCredits;
 
     // Getters and Setters
     public Integer getId() {
@@ -42,11 +43,11 @@ public class StarshipMaster {
         this.model = model;
     }
 
-    public Double getCostInCredits() {
+    public String getCostInCredits() {
         return costInCredits;
     }
 
-    public void setCostInCredits(Double costInCredits) {
+    public void setCostInCredits(String costInCredits) {
         this.costInCredits = costInCredits;
     }
 

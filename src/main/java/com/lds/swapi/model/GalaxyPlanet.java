@@ -2,6 +2,9 @@ package com.lds.swapi.model;
 
 import jakarta.persistence.*;
 
+/**
+ * Represents a galaxy planet from the Star Wars universe.
+ */
 @Entity
 @Table(name = "galaxy_planet")
 public class GalaxyPlanet {

@@ -8,6 +8,9 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
 
+/**
+ * Represents a character from the Star Wars universe.
+ */
 @Entity
 @Table(name = "star_wars_character")
 public class StarWarsCharacter {
@@ -16,10 +19,16 @@ public class StarWarsCharacter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+
+    // Foreign key to the 'galaxy_planet' table, storing the ID of the home planet
+    // This field is mapped to 'home_planet' column in the database
 //    @ManyToOne
 //    @JoinColumn(name = "home_planet", referencedColumnName = "id")
     @JsonProperty("home_planet")
     private Integer homePlanet;
+
+    // Stores a list of starship IDs as JSONB. The starships are not mapped as entities here
+    // but instead just represented as a list of their IDs for simplicity.
 //    @ManyToMany
 //    @JoinColumn(name = "starships", referencedColumnName = "id")
     @Type(JsonType.class)

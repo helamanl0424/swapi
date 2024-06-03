@@ -12,17 +12,23 @@ import org.springframework.web.server.ResponseStatusException;
 import com.lds.swapi.model.StarWarsCharacter;
 import com.lds.swapi.service.StarWarsCharacterService;
 
+/**
+ * REST controller for managing Star Wars characters.
+ * Provides endpoints for CRUD operations on Star Wars characters.
+ */
 @RestController
 @RequestMapping("/api/people")
 public class StarWarsCharacterController {
 
     private final StarWarsCharacterService characterService;
 
+    // Constructor injection for character service
     @Autowired
     public StarWarsCharacterController(StarWarsCharacterService characterService) {
         this.characterService = characterService;
     }
 
+    // Retrieve all characters with pagination support
     @GetMapping
     public ResponseEntity<?> getAllCharacters(
             @RequestParam(defaultValue = "50") int size,
@@ -36,6 +42,7 @@ public class StarWarsCharacterController {
         }
     }
 
+    // Retrieve a single character by their ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getCharacterById(@PathVariable Integer id) {
         try {
@@ -46,6 +53,7 @@ public class StarWarsCharacterController {
         }
     }
 
+    // Add a new character
     @PostMapping
     public ResponseEntity<?> addCharacter(@RequestBody StarWarsCharacter character) {
         try {
@@ -56,6 +64,7 @@ public class StarWarsCharacterController {
         }
     }
 
+    // Update an existing character by ID
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCharacter(@PathVariable Integer id, @RequestBody StarWarsCharacter character) {
         try {
@@ -66,6 +75,7 @@ public class StarWarsCharacterController {
         }
     }
 
+    // Delete a character by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCharacter(@PathVariable Integer id) {
         try {
@@ -76,6 +86,7 @@ public class StarWarsCharacterController {
         }
     }
 
+    // Retrieve detailed information about a character including their associated starships and home planet.
     @GetMapping("/details/{id}")
     public ResponseEntity<List<Map<String, Object>>> getCharacterDetails(@PathVariable Integer id) {
         try {
