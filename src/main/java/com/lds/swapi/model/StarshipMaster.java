@@ -12,25 +12,18 @@ public class StarshipMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String name;
     private String model;
     private String costInCredits;
 
-//    @ManyToMany(mappedBy = "starships")
-//    private Set<StarWarsCharacter> characters = new HashSet<>();
-
-    // Constructors
-    public StarshipMaster() {
-    }
-
     // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -58,15 +51,4 @@ public class StarshipMaster {
         this.costInCredits = costInCredits;
     }
 
-//    public Set<StarWarsCharacter> getCharacters() {
-//        return characters;
-//    }
-//
-//    public void setCharacters(Set<StarWarsCharacter> characters) {
-//        this.characters = characters;
-//        // Update bidirectional association
-//        for (StarWarsCharacter character : characters) {
-//            character.getStarships().add(this);
-//        }
-//    }
 }

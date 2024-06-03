@@ -1,11 +1,13 @@
 package com.lds.swapi.service;
 
-import com.lds.swapi.model.GalaxyPlanet;
-import com.lds.swapi.repository.GalaxyPlanetRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.lds.swapi.model.GalaxyPlanet;
+import com.lds.swapi.repository.GalaxyPlanetRepository;
 
 @Service
 public class GalaxyPlanetService {
@@ -22,7 +24,7 @@ public class GalaxyPlanetService {
         return galaxyPlanetRepository.findAllPlanets(limit, offset);
     }
 
-    public Optional<GalaxyPlanet> findPlanetById(Long id) {
+    public Optional<GalaxyPlanet> findPlanetById(Integer id) {
         return galaxyPlanetRepository.findPlanetById(id);
     }
 
@@ -30,11 +32,11 @@ public class GalaxyPlanetService {
         galaxyPlanetRepository.addPlanet(planet.getName(), planet.getClimate(), planet.getPopulation());
     }
 
-    public void updatePlanet(Long id, GalaxyPlanet planet) {
+    public void updatePlanet(Integer id, GalaxyPlanet planet) {
         galaxyPlanetRepository.updatePlanet(planet.getName(), planet.getClimate(), planet.getPopulation(), id);
     }
 
-    public void deletePlanet(Long id) {
+    public void deletePlanet(Integer id) {
         galaxyPlanetRepository.deletePlanet(id);
     }
 }

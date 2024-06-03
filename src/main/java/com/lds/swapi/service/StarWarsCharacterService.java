@@ -1,12 +1,15 @@
 package com.lds.swapi.service;
 
-import com.lds.swapi.model.StarWarsCharacter;
-import com.lds.swapi.repository.StarWarsCharacterRepository;
+import java.util.List;
+import java.util.Optional;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.lds.swapi.model.StarWarsCharacter;
+import com.lds.swapi.repository.StarWarsCharacterRepository;
 
 @Service
 public class StarWarsCharacterService {
@@ -18,29 +21,27 @@ public class StarWarsCharacterService {
         this.characterRepository = characterRepository;
     }
 
-    public List<StarWarsCharacter> findAll() {
-        return characterRepository.findAll();
+    public List<StarWarsCharacter> findAllCharacters(int limit, int offset) {
+        return characterRepository.findAllCharacters(limit, offset);
     }
 
-    public Optional<StarWarsCharacter> findById(Long id) {
-        return characterRepository.findById(id);
+    public Optional<StarWarsCharacter> findCharacterById(Integer id) {
+        return characterRepository.findCharacterById(id);
     }
 
-    public StarWarsCharacter save(StarWarsCharacter character) {
-        return characterRepository.save(character);
+    public void addCharacter(StarWarsCharacter character) throws JsonProcessingException {
+//        ObjectMapper mapper = new ObjectMapper();
+//        String starshipsJson = mapper.writeValueAsString(character.getStarships());
+        characterRepository.addCharacter(character.getName(), character.getHomePlanet(), character.getStarships());
     }
 
-    public Optional<StarWarsCharacter> update(Long id, StarWarsCharacter character) {
-        return characterRepository.findById(id)
-                .map(existingCharacter -> {
-                    existingCharacter.setName(character.getName());
-                    existingCharacter.setHomePlanet(character.getHomePlanet());
-                    existingCharacter.setStarships(character.getStarships());
-                    return Optional.of(characterRepository.save(existingCharacter));
-                }).orElse(Optional.empty());
+    public void updateCharacter(Integer id, StarWarsCharacter character) throws JsonProcessingException {
+//        ObjectMapper mapper = new ObjectMapper();
+//        String starshipsJson = mapper.writeValueAsString(character.getStarships());
+        characterRepository.updateCharacter(character.getName(), character.getHomePlanet(), character.getStarships(), id);
     }
 
-    public void delete(Long id) {
-        characterRepository.deleteById(id);
+    public void deleteCharacter(Integer id) {
+        characterRepository.deleteCharacter(id);
     }
 }

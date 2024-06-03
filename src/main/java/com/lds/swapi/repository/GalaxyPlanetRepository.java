@@ -18,7 +18,7 @@ public interface GalaxyPlanetRepository extends JpaRepository<GalaxyPlanet, Long
     List<GalaxyPlanet> findAllPlanets(int limit, int offset);
 
     @Query(value = "SELECT * FROM galaxy_planet WHERE id = ?1", nativeQuery = true)
-    Optional<GalaxyPlanet> findPlanetById(Long id);
+    Optional<GalaxyPlanet> findPlanetById(Integer id);
 
     @Modifying
     @Transactional
@@ -28,11 +28,11 @@ public interface GalaxyPlanetRepository extends JpaRepository<GalaxyPlanet, Long
     @Modifying
     @Transactional
     @Query(value = "UPDATE galaxy_planet SET name = ?1, climate = ?2, population = ?3 WHERE id = ?4", nativeQuery = true)
-    void updatePlanet(String name, String climate, Integer population, Long id);
+    void updatePlanet(String name, String climate, Integer population, Integer id);
 
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM galaxy_planet WHERE id = ?1", nativeQuery = true)
-    void deletePlanet(Long id);
+    void deletePlanet(Integer id);
 
 }

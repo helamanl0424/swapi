@@ -1,12 +1,14 @@
 package com.lds.swapi.controller;
 
-import com.lds.swapi.model.StarWarsCharacter;
-import com.lds.swapi.service.StarWarsCharacterService;
+import java.util.List;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.lds.swapi.model.StarWarsCharacter;
+import com.lds.swapi.service.StarWarsCharacterService;
 
 @RestController
 @RequestMapping("/api/people")
@@ -20,32 +22,35 @@ public class StarWarsCharacterController {
     }
 
     @GetMapping
-    public List<StarWarsCharacter> getAllCharacters() {
-        return characterService.findAll();
+    public ResponseEntity<List<StarWarsCharacter>> getAllCharacters(
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "0") int page) {
+        int offset = page * size;
+        return ResponseEntity.ok(characterService.findAllCharacters(size, offset));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StarWarsCharacter> getCharacterById(@PathVariable Long id) {
-        return characterService.findById(id)
+    public ResponseEntity<StarWarsCharacter> getCharacterById(@PathVariable Integer id) {
+        return characterService.findCharacterById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public StarWarsCharacter createCharacter(@RequestBody StarWarsCharacter character) {
-        return characterService.save(character);
+    public ResponseEntity<Void> addCharacter(@RequestBody StarWarsCharacter character) throws JsonProcessingException {
+        characterService.addCharacter(character);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StarWarsCharacter> updateCharacter(@PathVariable Long id, @RequestBody StarWarsCharacter updatedCharacter) {
-        return characterService.update(id, updatedCharacter)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<StarWarsCharacter> updateCharacter(@PathVariable Integer id, @RequestBody StarWarsCharacter character) throws JsonProcessingException {
+        characterService.updateCharacter(id, character);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCharacter(@PathVariable Long id) {
-        characterService.delete(id);
+    public ResponseEntity<Void> deleteCharacter(@PathVariable Integer id) {
+        characterService.deleteCharacter(id);
         return ResponseEntity.ok().build();
     }
 }

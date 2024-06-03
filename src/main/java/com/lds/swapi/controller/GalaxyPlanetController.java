@@ -21,13 +21,15 @@ public class GalaxyPlanetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GalaxyPlanet>> getAllPlanets(@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<List<GalaxyPlanet>> getAllPlanets(
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "0") int page) {
         int offset = page * size;
         return ResponseEntity.ok(galaxyPlanetService.findAllPlanets(size, offset));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GalaxyPlanet> getPlanetById(@PathVariable Long id) {
+    public ResponseEntity<GalaxyPlanet> getPlanetById(@PathVariable Integer id) {
         return galaxyPlanetService.findPlanetById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -40,13 +42,13 @@ public class GalaxyPlanetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePlanet(@PathVariable Long id, @RequestBody GalaxyPlanet planet) {
+    public ResponseEntity<Void> updatePlanet(@PathVariable Integer id, @RequestBody GalaxyPlanet planet) {
         galaxyPlanetService.updatePlanet(id, planet);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePlanet(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePlanet(@PathVariable Integer id) {
         galaxyPlanetService.deletePlanet(id);
         return ResponseEntity.ok().build();
     }
