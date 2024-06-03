@@ -1,10 +1,11 @@
 package com.lds.swapi.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.lds.swapi.model.StarshipMaster;
 import com.lds.swapi.repository.StarshipMasterRepository;
@@ -19,23 +20,43 @@ public class StarshipMasterService {
         this.starshipRepository = starshipRepository;
     }
 
-    public List<StarshipMaster> findAllShip(int limit, int offset) {
-        return starshipRepository.findAllStarships(limit, offset);
+    public List<StarshipMaster> findAllStarships(int limit, int offset) {
+        try {
+            return starshipRepository.findAllStarships(limit, offset);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to retrieve starships", e);
+        }
+
     }
 
-    public Optional<StarshipMaster> findShipById(Integer id) {
-        return starshipRepository.findStarshipById(id);
+    public StarshipMaster findShipById(Integer id) {
+        return starshipRepository.findStarshipById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Planet not found with id: " + id));
     }
 
     public void addShip(StarshipMaster starship) {
-        starshipRepository.addStarship(starship.getName(), starship.getModel(), starship.getCostInCredits());
+        try {
+            starshipRepository.addStarship(starship.getName(), starship.getModel(), starship.getCostInCredits());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error adding starship", e);
+        }
+
     }
 
     public void updateShip(Integer id, StarshipMaster starship) {
-        starshipRepository.updateStarship(starship.getName(), starship.getModel(), starship.getCostInCredits(), id);
+        try {
+            starshipRepository.updateStarship(starship.getName(), starship.getModel(), starship.getCostInCredits(), id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating starship", e);
+        }
+
     }
 
     public void deleteShip(Integer id) {
-        starshipRepository.deleteStarship(id);
+        try {
+            starshipRepository.deleteStarship(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting starship", e);
+        }
     }
 }
