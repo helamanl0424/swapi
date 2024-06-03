@@ -1,6 +1,10 @@
 package com.lds.swapi.service;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,5 +60,16 @@ public class StarWarsCharacterService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting character", e);
         }
+    }
+
+    public List<Map<String, Object>> getCharacterDetailsById(Integer id) {
+        List<Object[]> results = characterRepository.findCharacterDetailsById(id);
+        return results.stream().map(result -> {
+            Map<String, Object> details = new LinkedHashMap<>();
+            details.put("characterName", result[0]);
+            details.put("shipNames", result[1]);
+            details.put("planetName", result[2]);
+            return details;
+        }).collect(Collectors.toList());
     }
 }

@@ -1,9 +1,12 @@
 package com.lds.swapi.model;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.HashSet;
-import java.util.Set;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
+
 
 @Entity
 @Table(name = "star_wars_character")
@@ -15,10 +18,11 @@ public class StarWarsCharacter {
     private String name;
     @JoinColumn(name = "home_planet")
     private Integer homePlanet;
-    // Foreign key for many-to-many relationship handled via join table, not a direct JSONB column here
-    @ManyToMany
-    @JoinTable(name = "character_starships")
-    private Set<StarshipMaster> starships = new HashSet<>();
+//    @ManyToMany
+//    @JoinTable(name = "starship_master")
+    @Type(JsonType.class)
+    @Column(columnDefinition = "jsonb")
+    private List<String> starships = new ArrayList<>();
 
     // Getters and setters
     public Integer getId() {
@@ -45,11 +49,11 @@ public class StarWarsCharacter {
         this.homePlanet = homePlanet;
     }
 
-    public Set<StarshipMaster> getStarships() {
+    public List<String> getStarships() {
         return starships;
     }
 
-    public void setStarships(Set<StarshipMaster> starships) {
+    public void setStarships(List<String> starships) {
         this.starships = starships;
     }
 

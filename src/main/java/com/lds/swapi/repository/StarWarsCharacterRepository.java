@@ -2,7 +2,6 @@ package com.lds.swapi.repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import com.lds.swapi.model.StarshipMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,16 +22,34 @@ public interface StarWarsCharacterRepository extends JpaRepository<StarWarsChara
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO star_wars_character (name, home_planet, starships) VALUES (?1, ?2, ?3)", nativeQuery = true)
-    void addCharacter(String name, Integer homePlanet, Set<StarshipMaster> starships);
+    @Query(value = "INSERT INTO star_wars_character (name, home_planet, starships) VALUES (?1, ?2, ?3::jsonb)", nativeQuery = true)
+    void addCharacter(String name, Integer homePlanet, List<String> starships);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE star_wars_character SET name = ?1, home_planet = ?2, starships = ?3 WHERE id = ?4", nativeQuery = true)
-    void updateCharacter(String name, Integer homePlanet, Set<StarshipMaster> starships, Integer id);
+    void updateCharacter(String name, Integer homePlanet, List<String> starships, Integer id);
 
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM star_wars_character WHERE id = ?1", nativeQuery = true)
     void deleteCharacter(Integer id);
+
+    @Query(value = """
+    SELECT 
+        swc.name AS characterName, 
+        array_agg(ssm.name) AS shipNames,
+        gp.name AS planetName
+    FROM 
+        star_wars_character swc
+    JOIN 
+        starship_master ssm ON ssm.id = ANY(ARRAY(SELECT jsonb_array_elements_text(swc.starships)::int))
+    JOIN 
+        galaxy_planet gp ON gp.id = swc.home_planet
+    WHERE 
+        swc.id = ?1
+    GROUP BY 
+        swc.name, gp.name
+    """, nativeQuery = true)
+    List<Object[]> findCharacterDetailsById(Integer characterId);
 }

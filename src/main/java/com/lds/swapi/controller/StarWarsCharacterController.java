@@ -1,9 +1,10 @@
 package com.lds.swapi.controller;
 
 import java.util.List;
+import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,7 +34,6 @@ public class StarWarsCharacterController {
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         }
-
     }
 
     @GetMapping("/{id}")
@@ -47,7 +47,7 @@ public class StarWarsCharacterController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addCharacter(@RequestBody StarWarsCharacter character) throws JsonProcessingException {
+    public ResponseEntity<?> addCharacter(@RequestBody StarWarsCharacter character) {
         try {
             characterService.addCharacter(character);
             return ResponseEntity.ok("Character added successfully");
@@ -57,7 +57,7 @@ public class StarWarsCharacterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCharacter(@PathVariable Integer id, @RequestBody StarWarsCharacter character) throws JsonProcessingException {
+    public ResponseEntity<?> updateCharacter(@PathVariable Integer id, @RequestBody StarWarsCharacter character) {
         try {
             characterService.updateCharacter(id, character);
             return ResponseEntity.ok("Character updated successfully");
@@ -73,6 +73,16 @@ public class StarWarsCharacterController {
             return ResponseEntity.ok("Character deleted successfully");
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
+    }
+
+    @GetMapping("/details/{id}")
+    public ResponseEntity<List<Map<String, Object>>> getCharacterDetails(@PathVariable Integer id) {
+        try {
+            List<Map<String, Object>> details = characterService.getCharacterDetailsById(id);
+            return ResponseEntity.ok(details);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }
