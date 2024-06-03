@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lds.swapi.model.StarshipMaster;
 
-import javax.money.MonetaryAmount;
-
 @Repository
 public interface StarshipMasterRepository extends JpaRepository<StarshipMaster, Long> {
 

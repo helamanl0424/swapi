@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lds.swapi.model.StarWarsCharacter;
+
 @Repository
 public interface StarWarsCharacterRepository extends JpaRepository<StarWarsCharacter, Long> {
 

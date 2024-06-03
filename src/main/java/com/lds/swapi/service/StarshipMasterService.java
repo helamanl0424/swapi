@@ -24,7 +24,7 @@ public class StarshipMasterService {
         try {
             return starshipRepository.findAllStarships(limit, offset);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to retrieve starships", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to retrieve starships: " + e.getMessage(), e);
         }
     }
 
@@ -37,7 +37,7 @@ public class StarshipMasterService {
         try {
             starshipRepository.addStarship(starship.getName(), starship.getModel(), starship.getCostInCredits());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error adding starship", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error adding starship: " + e.getMessage(), e);
         }
     }
 
@@ -45,7 +45,7 @@ public class StarshipMasterService {
         try {
             starshipRepository.updateStarship(starship.getName(), starship.getModel(), starship.getCostInCredits(), id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating starship", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating starship: " + e.getMessage(), e);
         }
     }
 
@@ -53,7 +53,7 @@ public class StarshipMasterService {
         try {
             starshipRepository.deleteStarship(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting starship", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting starship: " + e.getMessage(), e);
         }
     }
 }

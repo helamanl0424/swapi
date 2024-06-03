@@ -1,14 +1,7 @@
 package com.lds.swapi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.hypersistence.utils.hibernate.type.money.MonetaryAmountType;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CompositeType;
-import org.javamoney.moneta.Money;
-
-import javax.money.Monetary;
-import javax.money.MonetaryAmount;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "starship_master")

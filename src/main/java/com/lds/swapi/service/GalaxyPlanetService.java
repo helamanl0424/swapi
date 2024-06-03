@@ -24,7 +24,7 @@ public class GalaxyPlanetService {
         try {
             return galaxyPlanetRepository.findAllPlanets(limit, offset);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to retrieve planets", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to retrieve planets: " + e.getMessage(), e);
         }
     }
 
@@ -37,7 +37,7 @@ public class GalaxyPlanetService {
         try {
             galaxyPlanetRepository.addPlanet(planet.getName(), planet.getClimate(), planet.getPopulation());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error adding planet", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error adding planet: " + e.getMessage(), e);
         }
     }
 
@@ -45,7 +45,7 @@ public class GalaxyPlanetService {
         try {
             galaxyPlanetRepository.updatePlanet(planet.getName(), planet.getClimate(), planet.getPopulation(), id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating planet", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating planet: " + e.getMessage(), e);
         }
     }
 
@@ -53,7 +53,7 @@ public class GalaxyPlanetService {
         try {
             galaxyPlanetRepository.deletePlanet(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting planet", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting planet: " + e.getMessage(), e);
         }
     }
 }
