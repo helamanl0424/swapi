@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.lds.swapi.model.StarWarsCharacter;
 import com.lds.swapi.service.StarWarsCharacterService;
@@ -22,35 +23,56 @@ public class StarWarsCharacterController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StarWarsCharacter>> getAllCharacters(
+    public ResponseEntity<?> getAllCharacters(
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "0") int page) {
-        int offset = page * size;
-        return ResponseEntity.ok(characterService.findAllCharacters(size, offset));
+        try {
+            int offset = page * size;
+            List<StarWarsCharacter> characters = characterService.findAllCharacters(size, offset);
+            return ResponseEntity.ok(characters);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
+
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StarWarsCharacter> getCharacterById(@PathVariable Integer id) {
-        return characterService.findCharacterById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> getCharacterById(@PathVariable Integer id) {
+        try {
+            StarWarsCharacter character = characterService.findCharacterById(id);
+            return ResponseEntity.ok(character);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 
     @PostMapping
-    public ResponseEntity<Void> addCharacter(@RequestBody StarWarsCharacter character) throws JsonProcessingException {
-        characterService.addCharacter(character);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> addCharacter(@RequestBody StarWarsCharacter character) throws JsonProcessingException {
+        try {
+            characterService.addCharacter(character);
+            return ResponseEntity.ok("Character added successfully");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StarWarsCharacter> updateCharacter(@PathVariable Integer id, @RequestBody StarWarsCharacter character) throws JsonProcessingException {
-        characterService.updateCharacter(id, character);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> updateCharacter(@PathVariable Integer id, @RequestBody StarWarsCharacter character) throws JsonProcessingException {
+        try {
+            characterService.updateCharacter(id, character);
+            return ResponseEntity.ok("Character updated successfully");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCharacter(@PathVariable Integer id) {
-        characterService.deleteCharacter(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> deleteCharacter(@PathVariable Integer id) {
+        try {
+            characterService.deleteCharacter(id);
+            return ResponseEntity.ok("Character deleted successfully");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 }

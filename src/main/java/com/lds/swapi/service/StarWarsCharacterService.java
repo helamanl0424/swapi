@@ -1,13 +1,15 @@
 package com.lds.swapi.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.lds.swapi.model.StarWarsCharacter;
 import com.lds.swapi.repository.StarWarsCharacterRepository;
+
 
 @Service
 public class StarWarsCharacterService {
@@ -20,22 +22,39 @@ public class StarWarsCharacterService {
     }
 
     public List<StarWarsCharacter> findAllCharacters(int limit, int offset) {
-        return characterRepository.findAllCharacters(limit, offset);
+        try {
+            return characterRepository.findAllCharacters(limit, offset);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to retrieve character", e);
+        }
     }
 
-    public Optional<StarWarsCharacter> findCharacterById(Integer id) {
-        return characterRepository.findCharacterById(id);
+    public StarWarsCharacter findCharacterById(Integer id) {
+        return characterRepository.findCharacterById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found with id: " + id));
     }
 
     public void addCharacter(StarWarsCharacter character) {
-        characterRepository.addCharacter(character.getName(), character.getHomePlanet(), character.getStarships());
+        try {
+            characterRepository.addCharacter(character.getName(), character.getHomePlanet(), character.getStarships());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error adding character", e);
+        }
     }
 
     public void updateCharacter(Integer id, StarWarsCharacter character) {
-        characterRepository.updateCharacter(character.getName(), character.getHomePlanet(), character.getStarships(), id);
+        try {
+            characterRepository.updateCharacter(character.getName(), character.getHomePlanet(), character.getStarships(), id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating character", e);
+        }
     }
 
     public void deleteCharacter(Integer id) {
-        characterRepository.deleteCharacter(id);
+        try {
+            characterRepository.deleteCharacter(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting character", e);
+        }
     }
 }
