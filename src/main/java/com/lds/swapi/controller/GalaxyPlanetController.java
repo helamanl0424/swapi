@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.lds.swapi.model.GalaxyPlanet;
 import com.lds.swapi.service.GalaxyPlanetService;
@@ -16,41 +17,60 @@ public class GalaxyPlanetController {
     private final GalaxyPlanetService galaxyPlanetService;
 
     @Autowired
-    public GalaxyPlanetController(GalaxyPlanetService galaxyPlanetService) {
-        this.galaxyPlanetService = galaxyPlanetService;
+    public GalaxyPlanetController(GalaxyPlanetService galaxyPlanetProductService) {
+        this.galaxyPlanetService = galaxyPlanetProductService;
     }
 
     @GetMapping
-    public ResponseEntity<List<GalaxyPlanet>> getAllPlanets(
+    public ResponseEntity<?> getAllPlanets(
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "0") int page) {
-        int offset = page * size;
-        return ResponseEntity.ok(galaxyPlanetService.findAllPlanets(size, offset));
+        try {
+            int offset = page * size;
+            List<GalaxyPlanet> planets = galaxyPlanetService.findAllPlanets(size, offset);
+            return ResponseEntity.ok(planets);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GalaxyPlanet> getPlanetById(@PathVariable Integer id) {
-        return galaxyPlanetService.findPlanetById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> getPlanetById(@PathVariable Integer id) {
+        try {
+            GalaxyPlanet planet = galaxyPlanetService.findPlanetById(id);
+            return ResponseEntity.ok(planet);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 
     @PostMapping
-    public ResponseEntity<Void> addPlanet(@RequestBody GalaxyPlanet planet) {
-        galaxyPlanetService.addPlanet(planet);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> addPlanet(@RequestBody GalaxyPlanet planet) {
+        try {
+            galaxyPlanetService.addPlanet(planet);
+            return ResponseEntity.ok("Planet added successfully");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePlanet(@PathVariable Integer id, @RequestBody GalaxyPlanet planet) {
-        galaxyPlanetService.updatePlanet(id, planet);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> updatePlanet(@PathVariable Integer id, @RequestBody GalaxyPlanet planet) {
+        try {
+            galaxyPlanetService.updatePlanet(id, planet);
+            return ResponseEntity.ok("Planet updated successfully");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePlanet(@PathVariable Integer id) {
-        galaxyPlanetService.deletePlanet(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> deletePlanet(@PathVariable Integer id) {
+        try {
+            galaxyPlanetService.deletePlanet(id);
+            return ResponseEntity.ok("Planet deleted successfully");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
-
 }

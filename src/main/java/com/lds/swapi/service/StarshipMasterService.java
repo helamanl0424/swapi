@@ -1,13 +1,13 @@
 package com.lds.swapi.service;
 
-import com.lds.swapi.model.GalaxyPlanet;
-import com.lds.swapi.model.StarshipMaster;
-import com.lds.swapi.repository.StarshipMasterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.lds.swapi.model.StarshipMaster;
+import com.lds.swapi.repository.StarshipMasterRepository;
 
 @Service
 public class StarshipMasterService {

@@ -23,12 +23,12 @@ public interface StarshipMasterRepository extends JpaRepository<StarshipMaster, 
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO starship_master (name, model, cost_in_credits) VALUES (?1, ?2, ?3)", nativeQuery = true)
-    void addStarship(String name, String model, String costInCredits);
+    void addStarship(String name, String model, Double costInCredits);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE starship_master SET name = ?1, model = ?2, cost_in_credits = ?3 WHERE id = ?4", nativeQuery = true)
-    void updateStarship(String name, String model, String costInCredits, Integer id);
+    void updateStarship(String name, String model, Double costInCredits, Integer id);
 
     @Modifying
     @Transactional

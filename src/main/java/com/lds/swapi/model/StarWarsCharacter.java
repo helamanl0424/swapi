@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
 @Table(name = "star_wars_character")
 public class StarWarsCharacter {
@@ -13,12 +12,9 @@ public class StarWarsCharacter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String name;
-
     @JoinColumn(name = "home_planet")
     private Integer homePlanet;
-
     // Foreign key for many-to-many relationship handled via join table, not a direct JSONB column here
     @ManyToMany
     @JoinTable(name = "character_starships")

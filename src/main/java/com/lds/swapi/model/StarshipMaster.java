@@ -9,10 +9,9 @@ public class StarshipMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String name;
     private String model;
-    private String costInCredits;
+    private Double costInCredits;
 
     // Getters and Setters
     public Integer getId() {
@@ -39,11 +38,11 @@ public class StarshipMaster {
         this.model = model;
     }
 
-    public String getCostInCredits() {
+    public Double getCostInCredits() {
         return costInCredits;
     }
 
-    public void setCostInCredits(String costInCredits) {
+    public void setCostInCredits(Double costInCredits) {
         this.costInCredits = costInCredits;
     }
 

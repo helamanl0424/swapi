@@ -52,4 +52,5 @@ public class StarshipMasterController {
         starshipService.deleteShip(id);
         return ResponseEntity.ok().build();
     }
+
 }
