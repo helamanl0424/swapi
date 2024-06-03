@@ -26,12 +26,11 @@ public class StarshipMasterService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to retrieve starships", e);
         }
-
     }
 
     public StarshipMaster findShipById(Integer id) {
         return starshipRepository.findStarshipById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Planet not found with id: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Starship not found with id: " + id));
     }
 
     public void addShip(StarshipMaster starship) {
@@ -40,7 +39,6 @@ public class StarshipMasterService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error adding starship", e);
         }
-
     }
 
     public void updateShip(Integer id, StarshipMaster starship) {
@@ -49,7 +47,6 @@ public class StarshipMasterService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating starship", e);
         }
-
     }
 
     public void deleteShip(Integer id) {
