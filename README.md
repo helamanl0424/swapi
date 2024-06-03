@@ -2,11 +2,11 @@
 
 ## Introduction
 
-The Star Wars API (SWAPI) is a Spring Boot-based application designed to manage and serve data related to the Star Wars universe. It allows users to interact with a database that stores information about Star Wars characters, their associated starships, and planets. This project demonstrates the capabilities of Spring Boot along with JPA for handling relational data efficiently.
+The Star Wars API (SWAPI) is a Spring Boot-based application designed to manage and serve data related to the Star Wars universe. It allows users to interact with a database that stores information about Star Wars characters, their associated starships, and planets. This project demonstrates Spring Boot and JPA's capabilities in handling relational data efficiently.
 
 ## Features
 
-- Manage character data including their names, home planets, and starships.
+- Manage character data, including their names, home planets, and starships.
 - Perform CRUD operations on characters, planets, and starships.
 - Retrieve detailed associations between characters, their starships, and home planets.
 - Custom native SQL queries to demonstrate complex data retrieval in a relational database.
@@ -25,7 +25,7 @@ The Star Wars API (SWAPI) is a Spring Boot-based application designed to manage 
 
 2. **Configure PostgreSQL:**
 - Ensure PostgreSQL is installed and running on your machine.
-- Create a database if you do not currently have one and configure the `application.properties` with the correct url, username, and password.
+- Create a database if you do not have one and configure the `application.properties` with the correct URL, username, and password.
 
 3. **Build the project:**
 
@@ -47,7 +47,7 @@ The Star Wars API (SWAPI) is a Spring Boot-based application designed to manage 
 Replace `people` with `starships` or `planets` as necessary to interact with other data types.
 
 Unique endpoint for characters only to retrieve a character name with their associated starships'name and home planet's name:
-**GET `/api/people/details/{id}`**
+- **GET `/api/people/details/{id}`**
 
 ## Possible Improvements
 
