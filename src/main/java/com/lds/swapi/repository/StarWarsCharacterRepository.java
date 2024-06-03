@@ -3,7 +3,6 @@ package com.lds.swapi.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.lds.swapi.model.StarshipMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,13 +21,13 @@ public interface StarWarsCharacterRepository extends JpaRepository<StarWarsChara
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO star_wars_character (name, home_planet, starships) VALUES (?1, ?2, ?3::jsonb)", nativeQuery = true)
-    void addCharacter(String name, Integer homePlanet, List<String> starships);
+    @Query(value = "INSERT INTO star_wars_character (name, home_planet, starships) VALUES (:name, :homePlanet, cast(:starshipsJson as jsonb))", nativeQuery = true)
+    void addCharacter(String name, Integer homePlanet, String starshipsJson);
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE star_wars_character SET name = ?1, home_planet = ?2, starships = ?3 WHERE id = ?4", nativeQuery = true)
-    void updateCharacter(String name, Integer homePlanet, List<String> starships, Integer id);
+    @Query(value = "UPDATE star_wars_character SET name = :name, home_planet = :homePlanet, starships = cast(:starshipsJson as jsonb) WHERE id = :id", nativeQuery = true)
+    void updateCharacter(String name, Integer homePlanet, String starshipsJson, Integer id);
 
     @Modifying
     @Transactional

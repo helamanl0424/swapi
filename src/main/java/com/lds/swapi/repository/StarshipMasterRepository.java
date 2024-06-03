@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lds.swapi.model.StarshipMaster;
 
+import javax.money.MonetaryAmount;
+
 @Repository
 public interface StarshipMasterRepository extends JpaRepository<StarshipMaster, Long> {
 
@@ -22,7 +24,7 @@ public interface StarshipMasterRepository extends JpaRepository<StarshipMaster, 
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO starship_master (name, model, cost_in_credits) VALUES (?1, ?2, ?3::money)", nativeQuery = true)
+    @Query(value = "INSERT INTO starship_master (name, model, cost_in_credits) VALUES (?1, ?2, ?3)", nativeQuery = true)
     void addStarship(String name, String model, Double costInCredits);
 
     @Modifying
