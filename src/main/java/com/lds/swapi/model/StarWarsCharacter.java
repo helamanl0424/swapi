@@ -16,16 +16,13 @@ public class StarWarsCharacter {
 
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "home_planet")
+    @JoinColumn(name = "home_planet")
     private Integer homePlanet;
 
     // Foreign key for many-to-many relationship handled via join table, not a direct JSONB column here
-    @ManyToOne
+    @ManyToMany
     @JoinTable(name = "character_starships")
-//    @Column(columnDefinition = "jsonb")
-    private StarshipMaster starships;
-    //private Set<StarshipMaster> starships = new HashSet<>();
+    private Set<StarshipMaster> starships = new HashSet<>();
 
     // Getters and setters
     public Integer getId() {
@@ -52,19 +49,12 @@ public class StarWarsCharacter {
         this.homePlanet = homePlanet;
     }
 
-//    public Set<StarshipMaster> getStarships() {
-//        return starships;
-//    }
-
-    public StarshipMaster getStarships() {
+    public Set<StarshipMaster> getStarships() {
         return starships;
     }
 
-//    public void setStarships(Set<StarshipMaster> starships) {
-//        this.starships = starships;
-//    }
-
-    public StarshipMaster setStarships() {
-        return starships;
+    public void setStarships(Set<StarshipMaster> starships) {
+        this.starships = starships;
     }
+
 }

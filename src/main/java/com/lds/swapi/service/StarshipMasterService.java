@@ -1,5 +1,6 @@
 package com.lds.swapi.service;
 
+import com.lds.swapi.model.GalaxyPlanet;
 import com.lds.swapi.model.StarshipMaster;
 import com.lds.swapi.repository.StarshipMasterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,29 +19,23 @@ public class StarshipMasterService {
         this.starshipRepository = starshipRepository;
     }
 
-    public List<StarshipMaster> findAll(Pageable pageable) {
-        return starshipRepository.findAll(pageable).getContent();
+    public List<StarshipMaster> findAllShip(int limit, int offset) {
+        return starshipRepository.findAllStarships(limit, offset);
     }
 
-    public Optional<StarshipMaster> findById(Long id) {
-        return starshipRepository.findById(id);
+    public Optional<StarshipMaster> findShipById(Integer id) {
+        return starshipRepository.findStarshipById(id);
     }
 
-    public StarshipMaster save(StarshipMaster starship) {
-        return starshipRepository.save(starship);
+    public void addShip(StarshipMaster starship) {
+        starshipRepository.addStarship(starship.getName(), starship.getModel(), starship.getCostInCredits());
     }
 
-    public Optional<StarshipMaster> update(Long id, StarshipMaster updatedStarship) {
-        return starshipRepository.findById(id)
-                .map(existingStarship -> {
-                    existingStarship.setName(updatedStarship.getName());
-                    existingStarship.setModel(updatedStarship.getModel());
-                    existingStarship.setCostInCredits(updatedStarship.getCostInCredits());
-                    return Optional.of(starshipRepository.save(existingStarship));
-                }).orElse(Optional.empty());
+    public void updateShip(Integer id, StarshipMaster starship) {
+        starshipRepository.updateStarship(starship.getName(), starship.getModel(), starship.getCostInCredits(), id);
     }
 
-    public void delete(Long id) {
-        starshipRepository.deleteById(id);
+    public void deleteShip(Integer id) {
+        starshipRepository.deleteStarship(id);
     }
 }

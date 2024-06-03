@@ -3,7 +3,6 @@ package com.lds.swapi.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,34 +21,35 @@ public class StarshipMasterController {
     }
 
     @GetMapping
-    public List<StarshipMaster> getAllStarships(
+    public ResponseEntity<List<StarshipMaster>> getAllStarships(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10" ) int size) {
-        return starshipService.findAll(PageRequest.of(page, size));
+        int offset = page * size;
+        return ResponseEntity.ok(starshipService.findAllShip(size, offset));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StarshipMaster> getStarshipById(@PathVariable Long id) {
-        return starshipService.findById(id)
+    public ResponseEntity<StarshipMaster> getStarshipById(@PathVariable Integer id) {
+        return starshipService.findShipById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public StarshipMaster createStarship(@RequestBody StarshipMaster starship) {
-        return starshipService.save(starship);
+    public ResponseEntity<Void> addStarship(@RequestBody StarshipMaster starship) {
+        starshipService.addShip(starship);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StarshipMaster> updateStarship(@PathVariable Long id, @RequestBody StarshipMaster updatedStarship) {
-        return starshipService.update(id, updatedStarship)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<StarshipMaster> updateStarship(@PathVariable Integer id, @RequestBody StarshipMaster starship) {
+        starshipService.updateShip(id, starship);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStarship(@PathVariable Long id) {
-        starshipService.delete(id);
+    public ResponseEntity<Void> deleteStarship(@PathVariable Integer id) {
+        starshipService.deleteShip(id);
         return ResponseEntity.ok().build();
     }
 }

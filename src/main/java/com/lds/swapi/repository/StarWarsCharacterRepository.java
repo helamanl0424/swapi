@@ -24,12 +24,12 @@ public interface StarWarsCharacterRepository extends JpaRepository<StarWarsChara
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO star_wars_character (name, home_planet, starships) VALUES (?1, ?2, ?3)", nativeQuery = true)
-    void addCharacter(String name, Integer homePlanet, StarshipMaster starships);
+    void addCharacter(String name, Integer homePlanet, Set<StarshipMaster> starships);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE star_wars_character SET name = ?1, home_planet = ?2, starships = ?3 WHERE id = ?4", nativeQuery = true)
-    void updateCharacter(String name, Integer homePlanet, StarshipMaster starships, Integer id);
+    void updateCharacter(String name, Integer homePlanet, Set<StarshipMaster> starships, Integer id);
 
     @Modifying
     @Transactional
