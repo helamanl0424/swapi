@@ -25,7 +25,7 @@ The Star Wars API (SWAPI) is a Spring Boot-based application designed to manage 
 
 2. **Configure PostgreSQL:**
 - Ensure PostgreSQL is installed and running on your machine.
-- Create a database if you do not have one and configure the `application.properties` with the correct URL, username, and password.
+- Create a database if you do not have one and configure the `src/main/resources/application.properties` with the correct URL, username, and password.
 
 3. **Build the project:**
 
