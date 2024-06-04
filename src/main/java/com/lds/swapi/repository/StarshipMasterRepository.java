@@ -15,7 +15,7 @@ import com.lds.swapi.model.StarshipMaster;
  * Repository interface for Star Wars starships.
  * Extends JpaRepository
  * A personal comment below:
- * Although the JpaRepository has built-in functions supporting CURD operations,
+ * Although the JpaRepository has built-in functions supporting CRUD operations,
  * I decide to write custom functions to showcase my SQL expertise.
  */
 @Repository
