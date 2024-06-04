@@ -55,7 +55,8 @@ Unique endpoint for characters only to retrieve a character name with their asso
 - **API Documentation**: Use Swagger or Spring REST Docs to generate API documentation automatically.
 - **Advanced Search Capabilities**: Integrate advanced search options for filtering data based on multiple criteria.
 - **Containerization**: Dockerize the application to simplify deployment and ensure consistency across different environments.
-- **Continuous Integration/Continuous Deployment (CI/CD)**: Set up pipelines to automate testing and deployment processes.
+- **Automated Testing**: Develop a comprehensive suite of automated tests (unit, integration, and end-to-end) to ensure API functionality.
+
 
 ## Conclusion
 
