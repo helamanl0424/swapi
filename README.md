@@ -51,12 +51,11 @@ Unique endpoint for characters only to retrieve a character name with their asso
 
 ## Possible Improvements
 
-- **Authentication and Authorization**: Implement security measures to protect the API with JWT or OAuth2.
+- **Automated Testing**: Develop a comprehensive suite of automated tests (unit, integration, and end-to-end) to ensure API functionality.
 - **API Documentation**: Use Swagger or Spring REST Docs to generate API documentation automatically.
 - **Advanced Search Capabilities**: Integrate advanced search options for filtering data based on multiple criteria.
 - **Containerization**: Dockerize the application to simplify deployment and ensure consistency across different environments.
-- **Automated Testing**: Develop a comprehensive suite of automated tests (unit, integration, and end-to-end) to ensure API functionality.
-
+- **Authentication and Authorization**: Implement security measures to protect the API with JWT or OAuth2.
 
 ## Conclusion
 
